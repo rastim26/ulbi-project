@@ -1,7 +1,6 @@
 node_modules/
 build/
 .ai/
-# JetBrains IDE (WebStorm, IntelliJ, etc)
 .idea/
 .idea/workspace.xml
 .idea/index/
