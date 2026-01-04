@@ -1,15 +1,10 @@
 .Button {
   cursor: pointer;
+  color: var(--inverted-text-color-secondary);
 }
 
 .clear {
-  margin: 0;
-  padding: 0;
   background: none;
   border: none;
   outline: none;
-  //color: inherit;
-  //font: inherit;
-  //text-decoration: none;
-  //display: inline;
 }
