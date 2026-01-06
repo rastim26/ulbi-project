@@ -5,6 +5,7 @@ const AboutPage = () => {
     return (
         <div>
             {t('About page')}
+            {t('About my personal website page')}
         </div>
     );
 };

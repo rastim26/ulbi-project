@@ -36,6 +36,24 @@ export function buildLoaders({isDev}: BuildOptions): webpack.RuleSetRule[] {
             "sass-loader",
         ],
     }
+    const babelLoader = {
+        test: /\.(js|jsx|ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+            loader: "babel-loader",
+            options: {
+                presets: ['@babel/preset-env'],
+                plugins: [
+                    ['i18next-extract',
+                        {
+                            "nsSeparator": "~",
+                            "locales": ["en", "ru"],
+                            "keyAsDefaultValue": true,
+                        }]
+                ],
+            }
+        }
+    }
     const svgLoader = {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
@@ -48,6 +66,7 @@ export function buildLoaders({isDev}: BuildOptions): webpack.RuleSetRule[] {
     return [
         fileLoader,
         svgLoader,
+        babelLoader,
         typescriptLoader,
         cssLoader,
     ]
