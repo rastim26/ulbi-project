@@ -1,6 +1,6 @@
-import {RouteProps} from "react-router-dom";
-import MainPage from "2-pages/MainPage/ui/MainPage";
-import {AboutPage} from "2-pages/AboutPage";
+import { RouteProps } from 'react-router-dom'
+import { MainPageAsync } from '2-pages/MainPage/ui/MainPage.async'
+import { AboutPageAsync } from '2-pages/AboutPage/ui/AboutPage.async'
 
 export enum AppRoutes {
     MAIN = 'main',
@@ -15,10 +15,10 @@ export const RoutePath: Record<AppRoutes, string> = {
 export const routeConfig: Record<AppRoutes, RouteProps> = {
     [AppRoutes.MAIN]: {
         path: RoutePath.main,
-        element: <MainPage/>,
+        element: <MainPageAsync />,
     },
     [AppRoutes.ABOUT]: {
         path: RoutePath.about,
-        element: <AboutPage/>,
+        element: <AboutPageAsync />,
     },
 }
