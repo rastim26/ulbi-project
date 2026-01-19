@@ -1,12 +1,11 @@
 :root {
-  --font-family-main: Consolas, 'Times New Roman', serif;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.5rem;
-  --line-height-md: 1.5;
-  --font-md: var(--font-size-md) / var(--line-height-md) var(--font-family-main);
-  --font-lg: var(--font-size-lg) / var(--line-height-md) var(--font-family-main);
-
-  --navbar-height: 50px;
-  --sidebar-width: 300px;
-  --sidebar-width-collapsed: 60px;
+    --font-family-main: consolas, "Times New Roman", serif;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.5rem;
+    --line-height-md: 1.5;
+    --font-md: var(--font-size-md) / var(--line-height-md) var(--font-family-main);
+    --font-lg: var(--font-size-lg) / var(--line-height-md) var(--font-family-main);
+    --navbar-height: 50px;
+    --sidebar-width: 300px;
+    --sidebar-width-collapsed: 60px;
 }
