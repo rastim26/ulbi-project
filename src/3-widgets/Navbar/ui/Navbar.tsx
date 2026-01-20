@@ -1,4 +1,4 @@
-import { classNames } from '6-shared/lib/classNames/classNames'
+import { clsx } from '6-shared/lib/clsx/clsx'
 import { AppLink, AppLinkTheme } from '6-shared/ui/AppLink/AppLink'
 import cls from './Navbar.module.scss'
 
@@ -10,7 +10,7 @@ export function Navbar({ className }: NavbarProps) {
     return (
         <nav
             aria-label="Main navigation"
-            className={classNames(cls.Navbar, {}, [className])}
+            className={clsx(cls.Navbar, className)}
         >
             <ul className={cls.list}>
                 <li>

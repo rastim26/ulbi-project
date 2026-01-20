@@ -1,4 +1,4 @@
-import { classNames } from '6-shared/lib/classNames/classNames'
+import { clsx } from '6-shared/lib/clsx/clsx'
 import { useState } from 'react'
 import { ThemeSwitcher } from '6-shared/ui/ThemeSwitcher/ThemeSwitcher'
 import { LangSwitcher } from '6-shared/ui/LangSwitcher/LangSwitcher'
@@ -15,9 +15,9 @@ export function Sidebar({ className }: SidebarProps) {
         setIsCollapsed((prev) => !prev)
     }
     return (
-        <div className={classNames(cls.Sidebar, { [cls.collapsed]: isCollapsed }, [className])}>
+        <div className={clsx(cls.Sidebar, { [cls.collapsed]: isCollapsed }, className)}>
             <Button onClick={onToggle}>Toggle</Button>
-            <div className={classNames(cls.switchers)}>
+            <div className={clsx(cls.switchers)}>
                 <ThemeSwitcher />
                 <LangSwitcher className={cls.lang} />
             </div>
