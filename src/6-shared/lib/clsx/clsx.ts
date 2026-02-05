@@ -28,6 +28,7 @@ export type ClassValue =
     | number
     | null
     | undefined
+    | boolean
     | ClassDictionary
     | ClassValue[]
 
