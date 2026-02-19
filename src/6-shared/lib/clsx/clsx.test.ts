@@ -1,4 +1,4 @@
-import { clsx } from './clsx'
+import { clsx } from '6-shared/lib/clsx/clsx'
 
 describe('clsx', () => {
     it('Single className', () => {
@@ -19,7 +19,7 @@ describe('clsx', () => {
         expect(clsx('btn', { 'mt-2': true })).toBe(expected)
     })
     it('Nested classNames', () => {
-        const expected = 'btn mt-2 text-lg\''
+        const expected = 'btn mt-2 text-lg'
         const isLarge = true
         expect(clsx(['btn', ['mt-2', isLarge && 'text-lg']])).toBe(expected)
     })

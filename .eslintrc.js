@@ -41,10 +41,16 @@ module.exports = {
         'arrow-parens': 0,
         'import/no-extraneous-dependencies': 1,
         'no-underscore-dangle': 0,
-        'i18next/no-literal-string': [2, { markupOnly: true }],
+        'i18next/no-literal-string': [2, { markupOnly: true, ignoreAttribute: ['data-testid'] }],
         'max-len': [2, { ignoreComments: true, code: 100 }],
     },
     globals: {
         __IS_DEV__: true,
     },
+    overrides: [
+        {
+            files: ['**/src/**/*.test.{ts,tsx}'],
+            rules: { 'i18next/no-literal-string': 0 },
+        },
+    ],
 }
