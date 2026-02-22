@@ -2,13 +2,14 @@ import { ButtonHTMLAttributes, FC } from 'react'
 import { clsx } from '6-shared/lib/clsx/clsx'
 import cls from './Button.module.scss'
 
-export enum ThemeButton {
+export enum ButtonTheme {
     CLEAR = 'clear',
+    OUTLINED = 'outlined',
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string
-    theme?: ThemeButton
+    theme?: ButtonTheme
 }
 
 export const Button: FC<ButtonProps> = (props) => {

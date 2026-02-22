@@ -1,6 +1,7 @@
 import webpack from 'webpack'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { BuildOptions } from './types/config'
+import { buildCssLoader } from './loaders/buildCssLoader'
+import { buildSvgLoader } from './loaders/buildSvgLoader'
 
 export function buildLoaders({ isDev }: BuildOptions): webpack.RuleSetRule[] {
     const typescriptLoader = {
@@ -14,27 +15,6 @@ export function buildLoaders({ isDev }: BuildOptions): webpack.RuleSetRule[] {
             },
         }],
         exclude: /node_modules/,
-    }
-    const cssLoader = {
-        test: /\.s[ac]ss$/i,
-        use: [
-            // Creates `style` nodes from JS strings // extracts CSS into separate files from JS
-            isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-            // Translates CSS into CommonJS
-            {
-                loader: 'css-loader',
-                options: {
-                    modules: {
-                        auto: (resPath: string) => Boolean(resPath.includes('.module.')),
-                        localIdentName: isDev
-                            ? '[local]__[hash:base64:3]'
-                            : '[hash:base64:8]',
-                    },
-                },
-            },
-            // Compiles Sass to CSS
-            'sass-loader',
-        ],
     }
     const babelLoader = {
         test: /\.(js|jsx|ts|tsx)$/,
@@ -54,14 +34,12 @@ export function buildLoaders({ isDev }: BuildOptions): webpack.RuleSetRule[] {
             },
         },
     }
-    const svgLoader = {
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
-    }
     const fileLoader = {
         test: /\.(png|jpe?g|gif|woff|woff2)$/i,
         use: ['file-loader'],
     }
+    const cssLoader = buildCssLoader(isDev)
+    const svgLoader = buildSvgLoader()
 
     return [
         fileLoader,

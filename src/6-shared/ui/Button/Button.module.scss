@@ -4,7 +4,15 @@
 }
 
 .clear {
+    color: var(--text-color-primary);
     background: none;
     border: none;
     outline: none;
+}
+
+.outlined {
+    padding: 0.5rem 1rem;
+    color: var(--text-color-primary);
+    background-color: transparent;
+    border: 1px solid var(--border-color);
 }
