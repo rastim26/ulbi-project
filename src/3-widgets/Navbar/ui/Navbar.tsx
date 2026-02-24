@@ -1,5 +1,6 @@
 import { clsx } from '6-shared/lib/clsx/clsx'
 import { AppLink, AppLinkTheme } from '6-shared/ui/AppLink/AppLink'
+import { useTranslation } from 'react-i18next'
 import cls from './Navbar.module.scss'
 
 interface NavbarProps {
@@ -7,6 +8,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ className }: NavbarProps) {
+    const { t } = useTranslation()
     return (
         <nav
             aria-label="Main navigation"
@@ -19,7 +21,7 @@ export function Navbar({ className }: NavbarProps) {
                         aria-label="Go to Main"
                         theme={AppLinkTheme.INVERTED}
                     >
-                        Main
+                        {t('Main')}
                     </AppLink>
                 </li>
                 <li>
@@ -28,7 +30,7 @@ export function Navbar({ className }: NavbarProps) {
                         aria-label="Go to About"
                         theme={AppLinkTheme.INVERTED}
                     >
-                        About
+                        {t('About')}
                     </AppLink>
                 </li>
             </ul>

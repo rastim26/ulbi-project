@@ -1,0 +1,47 @@
+name: CI (Lint • Test • Build • Visual Regression)
+run-name: CI • ${{ github.ref_name }} • ${{ github.actor }}
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 17.x ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint TypeScript
+        run: npm run lint:ts
+
+      - name: Lint CSS
+        run: npm run lint:css
+
+      - name: Run unit tests
+        run: npm run test:unit
+
+      - name: Build production project
+        run: npm run build:prod
+
+# Single job ordered:
+#  1.Install
+#  2.Lint
+#  3.Tests
+#  4.Build
