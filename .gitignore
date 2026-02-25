@@ -2,11 +2,8 @@ node_modules/
 build/
 .ai/
 .idea/
-.idea/workspace.xml
-.idea/index/
-.idea/caches/
 !.idea/codeStyles/
-!.idea/runConfigurations/
+!.idea/inspectionProfiles/
 
 *storybook.log
 storybook-static
