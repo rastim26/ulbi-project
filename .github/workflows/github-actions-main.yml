@@ -40,8 +40,8 @@ jobs:
       - name: Build production project
         run: npm run build:prod
 
-# Single job ordered:
-#  1.Install
-#  2.Lint
-#  3.Tests
-#  4.Build
+# Job order:
+#   1.Install
+#   2.Lint
+#   3.Tests
+#   4.Build
