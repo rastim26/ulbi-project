@@ -2,46 +2,174 @@ name: CI (Lint • Test • Build • Visual Regression)
 run-name: CI • ${{ github.ref_name }} • ${{ github.actor }}
 
 on:
+  # Run CI for mainline changes and PR validation.
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
-jobs:
-  pipeline:
-    runs-on: ubuntu-latest
+env:
+  NODE_VERSION: 17.x
 
-    strategy:
-      matrix:
-        node-version: [ 17.x ]
+# Cancel outdated runs for the same PR/branch when a newer commit arrives.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Fast feedback stage: independent checks run in parallel.
+  lint-ts:
+    name: Lint TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run TypeScript lint
+        run: npm run lint:ts
+
+  lint-css:
+    name: Lint styles
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint TypeScript
-        run: npm run lint:ts
-
-      - name: Lint CSS
+      - name: Run CSS lint
         run: npm run lint:css
 
-      - name: Run unit tests
+  test-unit:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Jest tests
         run: npm run test:unit
+
+  # Build stage starts only after all fast checks succeed.
+  build-app:
+    name: Build production app
+    runs-on: ubuntu-latest
+    needs: [ lint-ts, lint-css, test-unit ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build production project
         run: npm run build:prod
 
-# Job order:
-#   1.Install
-#   2.Lint
-#   3.Tests
-#   4.Build
+  build-storybook:
+    name: Build Storybook
+    runs-on: ubuntu-latest
+    needs: [ lint-ts, lint-css, test-unit ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Storybook bundle
+        run: npm run storybook:build
+
+      - name: Archive Storybook bundle
+        run: tar -czf storybook-static.tgz storybook-static
+
+      - name: Upload Storybook artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook-static
+          path: storybook-static.tgz
+          if-no-files-found: error
+
+  # UI snapshots stay on macOS to match local reference baselines.
+  visual-regression:
+    name: Run visual regression tests
+    runs-on: macos-latest
+    needs: build-storybook
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Reuse the static Storybook bundle from Ubuntu instead of rebuilding on macOS.
+      - name: Download Storybook artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook-static
+
+      - name: Extract Storybook bundle
+        run: tar -xzf storybook-static.tgz
+
+      - name: Run visual regression tests
+        run: npm run test:ui:ci
+
+      - name: Upload Loki artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: loki-artifacts
+          path: |
+            .loki/current
+            .loki/difference
+          if-no-files-found: ignore
+
+
+# Execution flow:
+#   1. lint-ts, lint-css, test-unit run in parallel
+#   2. build-app and build-storybook run in parallel after checks pass
+#   3. visual-regression runs last on macOS
