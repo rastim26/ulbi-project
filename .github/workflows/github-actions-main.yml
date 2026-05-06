@@ -98,7 +98,7 @@ jobs:
 
   build-storybook:
     name: Build Storybook
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     needs: [ lint-ts, lint-css, test-unit ]
 
     steps:
@@ -157,6 +157,25 @@ jobs:
 
       - name: Run visual regression tests
         run: npm run test:ui:ci
+
+      - name: Upload Loki artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: loki-artifacts
+          path: |
+            .loki/current
+            .loki/difference
+          if-no-files-found: ignore
+
+      - name: Upload Loki results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: loki-results
+          path: .loki
+          retention-days: 3
+
 
 # Execution flow:
 #   1. lint-ts, lint-css, test-unit run in parallel
