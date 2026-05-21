@@ -2,7 +2,7 @@ import { Theme, useTheme } from '1-app/providers/ThemeProvider'
 import { clsx } from '6-shared/lib/clsx/clsx'
 import LightIcon from '6-shared/assets/icons/theme-light.svg'
 import DarkIcon from '6-shared/assets/icons/theme-dark.svg'
-import { Button, ButtonTheme } from '6-shared/ui/Button/Button'
+import {Button} from '6-shared/ui/Button/Button'
 import cls from './ThemeSwitcher.module.scss'
 
 interface ThemeSwitcherProps {
@@ -14,7 +14,7 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
 
     return (
         <Button
-            theme={ButtonTheme.CLEAR}
+            variant="ghost"
             className={clsx(cls.ThemeSwitcher, className)}
             onClick={toggleTheme}
         >

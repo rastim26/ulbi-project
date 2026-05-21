@@ -1,32 +1,47 @@
 import { ButtonHTMLAttributes, FC } from 'react'
-import { clsx } from '6-shared/lib/clsx/clsx'
+import clsx from 'clsx'
 import cls from './Button.module.scss'
 
-export enum ButtonTheme {
-    CLEAR = 'clear',
-    OUTLINED = 'outlined',
+type ButtonIntent =
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+
+type ButtonVariant =
+    | 'solid'
+    | 'outline'
+    | 'ghost'
+    | 'link'
+
+type ButtonSize = 'sm' | 'md' | 'lg'
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+    intent?: ButtonIntent
+    variant?: ButtonVariant
+    size?: ButtonSize
+    block?: boolean
 }
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    className?: string
-    theme?: ButtonTheme
-}
-
-export const Button: FC<ButtonProps> = (props) => {
-    const {
-        className,
-        children,
-        theme,
-        ...otherProps
-    } = props
-    return (
-        <button
-            type="button"
-            className={clsx(cls.Button, className, cls[theme])}
-            {...otherProps}
-        >
-            {children}
-            {' '}
-        </button>
-    )
-}
+export const Button: FC<ButtonProps> = ({
+                                            intent = 'primary',
+                                            variant = 'solid',
+                                            size = 'md',
+                                            block = false,
+                                            type = 'button',
+                                            className,
+                                            ...props
+                                        }: ButtonProps) => (
+    <button
+        type={type}
+        className={clsx(
+            cls.button,
+            cls[intent],
+            cls[variant],
+            cls[size],
+            block && cls.block,
+            className,
+        )}
+        {...props}
+    />
+)

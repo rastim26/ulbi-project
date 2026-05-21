@@ -1,13 +1,25 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { ThemeDecorator } from '6-shared/config/storybook/ThemeDecorator'
 import { Theme } from '1-app/providers/ThemeProvider'
-import { Button, ButtonTheme } from './Button'
+import {Button} from './Button'
 
 export default {
     title: '6-shared/Button',
     component: Button,
     argTypes: {
-        backgroundColor: { control: 'color' },
+        intent: {
+            control: {type: 'select'},
+            options: ['primary', 'secondary', 'success', 'danger'],
+        },
+        variant: {
+            control: {type: 'select'},
+            options: ['solid', 'outline', 'ghost', 'link'],
+        },
+        size: {
+            control: {type: 'select'},
+            options: ['sm', 'md', 'lg'],
+        },
+        block: {control: 'boolean'},
     },
 } as ComponentMeta<typeof Button>
 
@@ -18,21 +30,33 @@ Primary.args = {
     children: 'Button',
 }
 
-export const Clear = Template.bind({})
-Clear.args = {
+export const SecondaryOutline = Template.bind({})
+SecondaryOutline.args = {
     children: 'Button',
-    theme: ButtonTheme.CLEAR,
+    intent: 'secondary',
+    variant: 'outline',
 }
 
-export const Outlined = Template.bind({})
-Outlined.args = {
+export const SuccessGhost = Template.bind({})
+SuccessGhost.args = {
     children: 'Button',
-    theme: ButtonTheme.OUTLINED,
+    intent: 'success',
+    variant: 'ghost',
 }
 
-export const OutlinedDark = Template.bind({})
-OutlinedDark.args = {
+export const DangerLink = Template.bind({})
+DangerLink.args = {
     children: 'Button',
-    theme: ButtonTheme.OUTLINED,
+    intent: 'danger',
+    variant: 'link',
 }
-OutlinedDark.decorators = [ThemeDecorator(Theme.DARK)]
+
+export const BlockLargeDark = Template.bind({})
+BlockLargeDark.args = {
+    children: 'Button',
+    intent: 'secondary',
+    variant: 'outline',
+    size: 'lg',
+    block: true,
+}
+BlockLargeDark.decorators = [ThemeDecorator(Theme.DARK)]
