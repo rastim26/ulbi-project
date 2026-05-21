@@ -20,7 +20,8 @@
       4
     ],
     "selector-class-pattern": null,
-    "selector-pseudo-element-colon-notation": "double"
+    "selector-pseudo-element-colon-notation": "double",
+    "property-no-vendor-prefix": null
   },
   "ignoreFiles": [
     "**/node_modules/**",

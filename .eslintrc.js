@@ -44,10 +44,11 @@ module.exports = {
         'i18next/no-literal-string': [2,
             {
                 markupOnly: true,
-                ignoreAttribute: ['data-testid', 'to', 'aria-label'],
+                props: true,
             },
         ],
         'max-len': [2, { ignoreComments: true, code: 100 }],
+        "react/button-has-type": 1,
     },
     globals: {
         __IS_DEV__: true,
