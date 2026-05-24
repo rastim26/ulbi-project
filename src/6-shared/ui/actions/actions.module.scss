@@ -1,0 +1,168 @@
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.base {
+    display: inline-flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    outline: none;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        opacity 0.15s ease,
+        transform 0.1s ease;
+
+    &:focus-visible {
+        box-shadow: 0 0 0 3px rgb(13 110 253 / 25%);
+    }
+
+    &:disabled,
+    &[aria-disabled="true"] {
+        cursor: not-allowed;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(1px);
+    }
+}
+
+/* =========================
+   INTENTS (ONLY BASE COLOR)
+   ========================= */
+
+.primary {
+    --c: var(--primary);
+}
+
+.secondary {
+    --c: var(--secondary);
+}
+
+.success {
+    --c: var(--success);
+}
+
+.danger {
+    --c: var(--danger);
+}
+
+/* =========================
+   SIZES
+   ========================= */
+
+.sm {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-sm);
+}
+
+.md {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-md);
+}
+
+.lg {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-lg);
+}
+
+/* =========================
+   VARIANTS
+   ========================= */
+
+.solid {
+    color: white;
+    background: var(--c);
+    border: 1px solid var(--c);
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--c) 90%, black);
+        border-color: color-mix(in srgb, var(--c) 90%, black);
+    }
+
+    &:active:not(:disabled) {
+        background: color-mix(in srgb, var(--c) 80%, black);
+        border-color: color-mix(in srgb, var(--c) 80%, black);
+    }
+}
+
+.outline {
+    color: var(--c);
+    background: transparent;
+    border: 1px solid var(--c);
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--c) 10%, transparent);
+    }
+
+    &:active:not(:disabled) {
+        background: color-mix(in srgb, var(--c) 18%, transparent);
+    }
+}
+
+.ghost {
+    color: var(--c);
+    background: transparent;
+    border: 1px solid transparent;
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--c) 10%, transparent);
+    }
+
+    &:active:not(:disabled) {
+        background: color-mix(in srgb, var(--c) 18%, transparent);
+    }
+}
+
+.link {
+    color: var(--c);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding-inline: 0;
+
+    &:hover:not(:disabled) {
+        color: color-mix(in srgb, var(--c) 85%, black);
+        text-decoration: underline;
+    }
+
+    &:active:not(:disabled) {
+        color: color-mix(in srgb, var(--c) 70%, black);
+    }
+}
+
+.text {
+    padding: 0;
+    color: var(--c);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+
+    &:hover:not(:disabled) {
+        color: color-mix(in srgb, var(--c) 85%, white);
+    }
+
+    &:active:not(:disabled) {
+        color: color-mix(in srgb, var(--c) 70%, white);
+    }
+}
+
+/* =========================
+   STATES
+   ========================= */
+
+.fullWidth {
+    width: 100%;
+}
+
+.active {
+    font-weight: 600;
+}
