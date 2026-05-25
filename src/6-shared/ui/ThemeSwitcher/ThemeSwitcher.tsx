@@ -1,8 +1,8 @@
 import { Theme, useTheme } from '1-app/providers/ThemeProvider'
 import { clsx } from '6-shared/lib/clsx/clsx'
-import LightIcon from '6-shared/assets/icons/theme-light.svg'
-import DarkIcon from '6-shared/assets/icons/theme-dark.svg'
-import {Button} from '6-shared/ui/Button/Button'
+import LightIcon from '6-shared/ui/Icon/icons/theme-light.svg'
+import DarkIcon from '6-shared/ui/Icon/icons/theme-dark.svg'
+import {Button} from '6-shared/ui/actions/Button/Button'
 import cls from './ThemeSwitcher.module.scss'
 
 interface ThemeSwitcherProps {

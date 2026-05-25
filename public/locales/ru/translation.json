@@ -2,9 +2,10 @@
   "Language": "Русский",
   "Loading...": "Загрузка...",
   "Not Found Page": "Страница не найдена",
-  "Toggle": "Вкл",
-  "Refresh the page": "Refresh the page",
-  "Something went wrong": "Something went wrong",
-  "Oops! Something went wrong": "Oops! Something went wrong",
-  "Throw Error": "Throw Error"
+  "Toggle": "Переключить",
+  "Refresh the page": "Обновить страницу",
+  "Something went wrong": "Что-то пошло не так",
+  "Oops! Something went wrong": "Упс! Что-то пошло не так",
+  "Throw Error": "Вызвать ошибку",
+  "Language short": "Ру"
 }
