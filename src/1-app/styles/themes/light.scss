@@ -1,13 +1,35 @@
-:root {
-    --bg-color-primary: #d1bdff;
-    --bg-color-secondary: #e6dbff;
-    --text-color-primary: #141228;
-    --text-color-secondary: #282040;
-    --inverted-bg-color-primary: #282040;
-    --inverted-bg-color-secondary: #1b1821;
-    --inverted-text-color-primary: #d1bdff;
-    --inverted-text-color-secondary: #e6dbff;
-    --border-color: #2f2937;
-    --accent-color: #6a4dff;
-    --accent-color-hover: #5a3ee0;
+[data-theme="light"] {
+    /* =========================
+     BACKGROUND SYSTEM
+     ========================= */
+
+    --color-bg-primary: var(--color-purple-100);
+    --color-bg-secondary: var(--color-purple-200);
+
+    /* =========================
+     SURFACE (cards, modals, etc.)
+     ========================= */
+
+    --color-surface: var(--color-white);
+
+    /* =========================
+     TEXT SYSTEM
+     ========================= */
+
+    --color-text-primary: var(--color-neutral-950);
+    --color-text-secondary: var(--color-neutral-800);
+
+    /* =========================
+     BORDER
+     ========================= */
+
+    --color-border: var(--color-border-800);
+
+    /* =========================
+     BRAND (primary UI actions)
+     ========================= */
+
+    --color-primary: var(--color-purple-500);
+    --color-primary-hover: var(--color-purple-700);
+    --color-secondary: var(--color-neutral-950);
 }

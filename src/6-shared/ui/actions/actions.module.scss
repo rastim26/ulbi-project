@@ -40,19 +40,19 @@
    ========================= */
 
 .primary {
-    --c: var(--primary);
+    --c: var(--color-primary);
 }
 
 .secondary {
-    --c: var(--secondary);
+    --c: var(--color-secondary);
 }
 
 .success {
-    --c: var(--success);
+    --c: var(--color-success);
 }
 
 .danger {
-    --c: var(--danger);
+    --c: var(--color-danger);
 }
 
 /* =========================
@@ -79,7 +79,7 @@
    ========================= */
 
 .solid {
-    color: white;
+    color: var(--color-white);
     background: var(--c);
     border: 1px solid var(--c);
 

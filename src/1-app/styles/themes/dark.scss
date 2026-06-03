@@ -1,13 +1,35 @@
-.app.dark {
-    --bg-color-primary: #282040;
-    --bg-color-secondary: #1b1821;
-    --text-color-primary: #f7f3fc;
-    --text-color-secondary: #b8b2c1;
-    --inverted-bg-color-primary: #d1bdff;
-    --inverted-bg-color-secondary: #e6dbff;
-    --inverted-text-color-primary: #141228;
-    --inverted-text-color-secondary: #282040;
-    --border-color: #9f92bb;
-    --accent-color: #8b6aff;
-    --accent-color-hover: #7a58e6;
+[data-theme="dark"] {
+    /* =========================
+     BACKGROUND SYSTEM
+     ========================= */
+
+    --color-bg-primary: var(--color-purple-400);
+    --color-bg-secondary: var(--color-neutral-800);
+
+    /* =========================
+     SURFACE
+     ========================= */
+
+    --color-surface: var(--color-neutral-800);
+
+    /* =========================
+     TEXT SYSTEM
+     ========================= */
+
+    --color-text-primary: var(--color-neutral-100);
+    --color-text-secondary: var(--color-neutral-300);
+
+    /* =========================
+     BORDER
+     ========================= */
+
+    --color-border: var(--color-neutral-500);
+
+    /* =========================
+     BRAND
+     ========================= */
+
+    --color-primary: var(--color-purple-700);
+    --color-primary-hover: var(--color-purple-300);
+    --color-secondary: var(--color-purple-100);
 }

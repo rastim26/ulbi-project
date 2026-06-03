@@ -1,13 +1,14 @@
 @import "reset";
+@import "variables/palette";
 @import "variables/global";
 @import "themes/light";
 @import "themes/dark";
 
 .app {
     min-height: 100vh;
-    color: var(--text-color-primary);
+    color: var(--color-text-primary);
     font: var(--font-md);
-    background-color: var(--bg-color-primary);
+    background-color: var(--color-bg-primary);
 }
 
 .content-page {
