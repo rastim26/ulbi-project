@@ -16,6 +16,7 @@ export const LangSwitcher = ({className, isShort}: LangSwitcherProps) => {
     return (
         <Button
             className={clsx(cls.LangSwitcher, className)}
+            intent="secondary"
             variant="ghost"
             onClick={toggle}
         >
