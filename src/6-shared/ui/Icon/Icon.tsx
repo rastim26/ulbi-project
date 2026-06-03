@@ -4,11 +4,13 @@ import styles from './Icon.module.scss'
 
 import HomeIcon from './icons/home.svg'
 import ListIcon from './icons/list.svg'
+import ThemeModeIcon from './icons/moon-and-sun.svg'
 
 
 const icons = {
     home: HomeIcon,
     list: ListIcon,
+    theme: ThemeModeIcon,
 }
 
 export type IconName = keyof typeof icons

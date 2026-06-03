@@ -1,8 +1,7 @@
-import { Theme, useTheme } from '1-app/providers/ThemeProvider'
-import { clsx } from '6-shared/lib/clsx/clsx'
-import LightIcon from '6-shared/ui/Icon/icons/theme-light.svg'
-import DarkIcon from '6-shared/ui/Icon/icons/theme-dark.svg'
+import {Theme, useTheme} from '1-app/providers/ThemeProvider'
+import {clsx} from '6-shared/lib/clsx/clsx'
 import {Button} from '6-shared/ui/actions/Button/Button'
+import {Icon} from "6-shared/ui/Icon/Icon";
 import cls from './ThemeSwitcher.module.scss'
 
 interface ThemeSwitcherProps {
@@ -15,10 +14,15 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
     return (
         <Button
             variant="ghost"
-            className={clsx(cls.ThemeSwitcher, className)}
+            className={clsx(
+                cls.ThemeSwitcher,
+                {'themeLight': theme === Theme.LIGHT},
+                {'themeDark': theme === Theme.DARK},
+                className
+            )}
             onClick={toggleTheme}
         >
-            {theme === Theme.DARK ? <DarkIcon /> : <LightIcon />}
+            <Icon name="theme"/>
         </Button>
     )
 }
