@@ -123,11 +123,11 @@
 }
 
 .link {
+    padding: 0;
     color: var(--c);
     background: transparent;
     border: none;
     border-radius: 0;
-    padding-inline: 0;
 
     &:hover:not(:disabled) {
         color: color-mix(in srgb, var(--c) 85%, black);
