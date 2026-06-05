@@ -20,6 +20,7 @@ export function Navbar({ className }: NavbarProps) {
                         to="/"
                         aria-label="Go to Main"
                         intent="secondary"
+                        variant="text"
                     >
                         {t('Main')}
                     </NavLink>
@@ -29,6 +30,7 @@ export function Navbar({ className }: NavbarProps) {
                         to="/about"
                         aria-label="Go to About"
                         intent="secondary"
+                        variant="text"
                     >
                         {t('About')}
                     </NavLink>
