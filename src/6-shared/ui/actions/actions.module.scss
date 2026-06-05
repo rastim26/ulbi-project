@@ -130,12 +130,13 @@
     border-radius: 0;
 
     &:hover:not(:disabled) {
-        color: color-mix(in srgb, var(--c) 85%, black);
         text-decoration: underline;
+        transform: translateY(-1px);
+        opacity: 0.8;
     }
 
     &:active:not(:disabled) {
-        color: color-mix(in srgb, var(--c) 70%, black);
+        opacity: 0.6;
     }
 }
 
@@ -147,11 +148,12 @@
     border-radius: 0;
 
     &:hover:not(:disabled) {
-        color: color-mix(in srgb, var(--c) 85%, black);
+        transform: translateY(-1px);
+        opacity: 0.8;
     }
 
     &:active:not(:disabled) {
-        color: color-mix(in srgb, var(--c) 70%, black);
+        opacity: 0.6;
     }
 }
 

@@ -20,7 +20,7 @@ export const LangSwitcher = ({className, isShort}: LangSwitcherProps) => {
             variant="ghost"
             onClick={toggle}
         >
-            {t(isShort ? 'Language short' : 'Language')}
+            {t(isShort ? 'Lang' : 'Language')}
         </Button>
     )
 }

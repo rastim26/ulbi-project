@@ -1,11 +1,11 @@
 .themeSwitcher {
     display: flex;
-}
 
-.themeLight {
-    --c: #0115c6;
-}
+    [data-theme="light"] & {
+        --c: #0115c6;
+    }
 
-.themeDark {
-    --c: #ffc700;
+    [data-theme="dark"] & {
+        --c: #ffc700;
+    }
 }

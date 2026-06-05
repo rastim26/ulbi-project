@@ -3,7 +3,7 @@ import { Story } from '@storybook/react'
 import { Theme } from '1-app/providers/ThemeProvider'
 
 export const ThemeDecorator = (theme: Theme) => (StoryComponent: Story) => (
-    <div className={`app ${theme}`}>
+    <div data-theme={theme} className="app">
         <StoryComponent />
     </div>
 )

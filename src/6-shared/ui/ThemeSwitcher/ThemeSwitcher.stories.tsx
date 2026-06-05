@@ -12,6 +12,7 @@ const Template: ComponentStory<typeof ThemeSwitcher> = (args) => <ThemeSwitcher 
 
 export const Light = Template.bind({})
 Light.args = {}
+Light.decorators = [ThemeDecorator(Theme.LIGHT)]
 
 export const Dark = Template.bind({})
 Dark.args = {}
