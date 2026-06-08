@@ -132,7 +132,7 @@
     &:hover:not(:disabled) {
         text-decoration: underline;
         transform: translateY(-1px);
-        opacity: 0.8;
+        opacity: 0.75;
     }
 
     &:active:not(:disabled) {
