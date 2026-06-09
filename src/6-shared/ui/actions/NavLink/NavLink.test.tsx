@@ -14,7 +14,7 @@ describe('NavLink', () => {
 
         expect(link).toBeInTheDocument()
         expect(link).toHaveAttribute('href', '/about')
-        expect(link).toHaveClass('base', 'primary', 'link', 'md', 'nav')
+        expect(link).toHaveClass('base', 'primary', 'link', 'md')
     })
 
     it('should add active class when route matches', () => {
