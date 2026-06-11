@@ -1,16 +1,13 @@
 import './styles/index.scss'
 import React, { Suspense } from 'react'
-import { useTheme } from '1-app/providers/ThemeProvider'
 import { AppRouter } from '1-app/providers/router'
 import { Navbar } from '3-widgets/Navbar'
 import { Sidebar } from '3-widgets/Sidebar'
 import { Loader } from '6-shared/ui/Loader/Loader'
 
 const App = () => {
-    const { theme } = useTheme()
-
     return (
-        <div data-theme={theme} className="app">
+        <div className="app">
             <Suspense fallback={<Loader />}>
                 <Navbar />
                 <div className="content-page">
