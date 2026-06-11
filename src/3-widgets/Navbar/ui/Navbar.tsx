@@ -2,6 +2,9 @@ import { useTranslation } from 'react-i18next'
 import {clsx} from '6-shared/lib/clsx/clsx'
 import {NavLink} from "6-shared/ui/actions/NavLink/NavLink";
 import cls from './Navbar.module.scss'
+import {Button} from "6-shared/ui/actions/Button/Button";
+import {Modal} from "6-shared/ui/Modal/Modal";
+import {useState} from "react";
 
 interface NavbarProps {
     className?: string
@@ -9,6 +12,7 @@ interface NavbarProps {
 
 export function Navbar({ className }: NavbarProps) {
     const { t } = useTranslation()
+    const [isOpen, setIsOpen] = useState(false)
     return (
         <nav
             aria-label="Main navigation"
@@ -36,6 +40,17 @@ export function Navbar({ className }: NavbarProps) {
                     </NavLink>
                 </li>
             </ul>
+            <Button onClick={() => setIsOpen(true)}>
+                Open modal
+            </Button>
+
+            <Modal
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+            >
+                <h2>Modal title</h2>
+                <p>Modal content</p>
+            </Modal>
         </nav>
     )
 }

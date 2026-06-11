@@ -1,0 +1,46 @@
+.modal {
+    position: fixed;
+    z-index: var(--z-index-modal);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    inset: 0;
+}
+
+.opened {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 60%);
+    backdrop-filter: blur(4px);
+}
+
+.content {
+    position: relative;
+    top: 50%;
+    min-width: 400px;
+    max-width: 90vw;
+    margin: auto;
+    padding: 24px;
+    background: var(--color-surface);
+    border-radius: 16px;
+    transform: translateY(-50%) scale(0.96);
+    opacity: 0;
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.opened .content {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+}
+
+.closing .content {
+    transform: translateY(-50%) scale(0.96);
+    opacity: 0;
+}

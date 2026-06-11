@@ -4,6 +4,10 @@ import { Theme } from '1-app/providers/ThemeProvider'
 
 export const ThemeDecorator = (theme: Theme) => (StoryComponent: Story) => {
     document.documentElement.dataset.theme = theme
-    return <StoryComponent/>
+    return (
+        <div className="app">
+            <StoryComponent/>
+        </div>
+    )
 }
 
