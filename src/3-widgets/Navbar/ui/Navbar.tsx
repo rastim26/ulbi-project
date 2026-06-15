@@ -50,6 +50,10 @@ export function Navbar({ className }: NavbarProps) {
             >
                 <h2>Modal title</h2>
                 <p>Modal content</p>
+                <a href="#">1 Close</a>
+                <a href="#">2 Close</a>
+                <a href="#">3 Close</a>
+                <a href="#">4 Close</a>
             </Modal>
         </nav>
     )

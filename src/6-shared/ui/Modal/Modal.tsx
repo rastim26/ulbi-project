@@ -1,27 +1,37 @@
 import {
     FC,
     ReactNode,
-    useCallback,
     useEffect,
     useRef,
     useState,
 } from 'react'
-import {createPortal} from 'react-dom'
 
+/* Helper */
+import {PORTAL_ID} from '6-shared/config/portalTargets/portalTargets'
 import {clsx} from '6-shared/lib/clsx/clsx'
-import cls from './Modal.module.scss'
+import {Portal} from '6-shared/ui/Portal/Portal'
 
-const ANIMATION_DELAY = 300
+/* Hooks */
+import {useBodyLock} from '6-shared/hooks/useBodyLock/useBodyLock'
+import {useEscClose} from '6-shared/hooks/useEscClose/useEscClose'
+import {useFocusRestore} from '6-shared/hooks/useFocusRestore/useFocusRestore'
+
+
+import cls from './Modal.module.scss'
 
 interface ModalProps {
     isOpen: boolean
     onClose: () => void
     children: ReactNode
+
     className?: string
     contentClassName?: string
+
     lazy?: boolean
     titleId?: string
 }
+
+const ANIMATION_DELAY = 300
 
 export const Modal: FC<ModalProps> = ({
                                           isOpen,
@@ -32,108 +42,92 @@ export const Modal: FC<ModalProps> = ({
                                           lazy = true,
                                           titleId = 'modal-title',
                                       }) => {
-
     const [isMounted, setIsMounted] = useState(false)
+    const [isRendered, setIsRendered] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
 
     const dialogRef = useRef<HTMLDivElement | null>(null)
-    const lastFocusedElement = useRef<HTMLElement | null>(null)
 
-    // lazy mount
-    useEffect(() => {
-        if (isOpen) {
-            setIsMounted(true)
-        }
-    }, [isOpen])
-
-    // scroll lock
     useEffect(() => {
         if (!isOpen) return
 
-        const prev = document.body.style.overflow
-        document.body.style.overflow = 'hidden'
+        setIsMounted(true)
 
-        return () => {
-            document.body.style.overflow = prev
-        }
+
+        const id = requestAnimationFrame(() => {
+            setIsRendered(true)
+        })
+
+        return () => cancelAnimationFrame(id)
     }, [isOpen])
 
-    // focus management (basic)
-    useEffect(() => {
-        if (isOpen) {
-            lastFocusedElement.current = document.activeElement as HTMLElement
-
-            setTimeout(() => {
-                dialogRef.current?.focus()
-            }, 0)
-        }
-
-        return () => {
-            lastFocusedElement.current?.focus?.()
-        }
-    }, [isOpen])
-
-    // escape
-    useEffect(() => {
-        if (!isOpen) return
-
-        const onKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                handleClose()
-            }
-        }
-
-        document.addEventListener('keydown', onKeyDown)
-        return () => document.removeEventListener('keydown', onKeyDown)
-    }, [isOpen])
-
-    const handleClose = useCallback(() => {
+    const requestClose = () => {
+        if (isClosing) return
         setIsClosing(true)
+    }
 
-        window.setTimeout(() => {
-            setIsClosing(false)
-            onClose()
+    const finalizeClose = () => {
+        setIsClosing(false)
+        setIsRendered(false)
+        setIsMounted(false)
+        onClose()
+    }
+
+    const handleTransitionEnd = (e: React.TransitionEvent) => {
+        if (e.target !== e.currentTarget) return
+        if (!isClosing) return
+
+        finalizeClose()
+    }
+
+    const handleOverlayClick = requestClose
+
+    // fallback safety
+    useEffect(() => {
+        if (!isClosing) return
+
+        const id = window.setTimeout(() => {
+            finalizeClose()
         }, ANIMATION_DELAY)
-    }, [onClose])
 
-    const handleOverlayClick = () => {
-        handleClose()
-    }
+        return () => clearTimeout(id)
+    }, [isClosing])
 
-    if (lazy && !isMounted) {
-        return null
-    }
+    useBodyLock(isOpen)
+    useEscClose(isOpen, requestClose)
+    useFocusRestore(isOpen, dialogRef)
 
-    return createPortal(
-        <div
-            className={clsx(
-                cls.modal,
-                {
-                    [cls.opened]: isOpen,
-                    [cls.closing]: isClosing,
-                },
-                className
-            )}
-        >
-            {/* overlay ONLY visual */}
+    if (lazy && !isMounted) return null
+
+    return (
+        <Portal target={PORTAL_ID.MODAL}>
             <div
-                className={cls.overlay}
-                onClick={handleOverlayClick}
-            />
-
-            {/* dialog = accessibility root */}
-            <div
-                ref={dialogRef}
-                className={clsx(cls.content, contentClassName)}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby={titleId}
-                tabIndex={-1}
-                onClick={(e) => e.stopPropagation()}
+                className={clsx(
+                    cls.modal,
+                    {
+                        [cls.opened]: isRendered,
+                        [cls.closing]: isClosing,
+                    },
+                    className
+                )}
             >
-                {children}
+                <div
+                    className={cls.overlay}
+                    onClick={handleOverlayClick}
+                />
+
+                <div
+                    ref={dialogRef}
+                    className={clsx(cls.content, contentClassName)}
+                    onTransitionEnd={handleTransitionEnd}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby={titleId}
+                    tabIndex={-1}
+                >
+                    {children}
+                </div>
             </div>
-        </div>,
-        document.body
+        </Portal>
     )
 }

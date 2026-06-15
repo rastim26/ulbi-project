@@ -1,21 +1,16 @@
 .modal {
     position: fixed;
-    z-index: var(--z-index-modal);
+    z-index: -1;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
     inset: 0;
 }
 
-.opened {
-    opacity: 1;
-    pointer-events: auto;
-}
-
 .overlay {
     position: absolute;
     inset: 0;
-    background: rgb(0 0 0 / 60%);
+    background: var(--color-overlay);
     backdrop-filter: blur(4px);
 }
 
@@ -28,19 +23,25 @@
     padding: 24px;
     background: var(--color-surface);
     border-radius: 16px;
-    transform: translateY(-50%) scale(0.96);
+    transform: translateY(-50%) scale(0.5);
     opacity: 0;
     transition:
         transform 0.3s ease,
         opacity 0.3s ease;
 }
 
-.opened .content {
-    transform: translateY(-50%) scale(1);
+.opened {
+    z-index: var(--z-index-modal);
     opacity: 1;
+    pointer-events: auto;
+
+    & .content {
+        transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
 }
 
 .closing .content {
-    transform: translateY(-50%) scale(0.96);
+    transform: translateY(-50%) scale(0.5);
     opacity: 0;
 }
