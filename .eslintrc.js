@@ -49,6 +49,7 @@ module.exports = {
         ],
         'max-len': [2, { ignoreComments: true, code: 100 }],
         "react/button-has-type": 1,
+        "no-param-reassign": 0,
     },
     globals: {
         __IS_DEV__: true,
